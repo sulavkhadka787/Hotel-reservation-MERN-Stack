@@ -2,6 +2,7 @@ import {useState} from 'react';
 import RegisterForm from '../components/RegisterForm';
 import axios from 'axios';
 import {toast} from 'react-toastify';
+import {register} from '../actions/auth';
 
 
 
@@ -15,14 +16,10 @@ const Register=({history})=>{
    const handleSubmit=async(e)=>{
       e.preventDefault();
       try{
-         const res=await axios.post(`http://localhost:8000/api/register`,{
-         name:name,
-         email:email,
-         password:password
-      })
-      console.log('REGISTER USER===>',res);
-      toast.success('Register success, Please Login');
-      history.push('/login');
+         const res=await register({name,email,password});
+         console.log('REGISTER USER===>',res);
+         toast.success('Register success, Please Login');
+         history.push('/login');
       }catch(err){
          console.log(err);
          if(err.response.status===400){
@@ -31,6 +28,7 @@ const Register=({history})=>{
       }
    }
 
+   console.log('REACT_APP_API',process.env.REACT_APP_API);
    
 
    return(

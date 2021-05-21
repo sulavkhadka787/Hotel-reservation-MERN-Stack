@@ -12,7 +12,7 @@ const ConnectNav=()=>{
     return(
         
         <div className="d-flex justify-content-around">
-        {JSON.stringify(user.name[0])}
+        
             <Card>
                 <Meta 
                     avatar={<Avatar>user.name[0]</Avatar>}

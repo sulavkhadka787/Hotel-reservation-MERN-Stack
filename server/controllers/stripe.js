@@ -37,3 +37,19 @@ export const createConnectAccount=async(req,res)=>{
     console.log('LOGIN LINK',link);
     res.send(link);
 }
+
+export const getAccountStatus=async(req,res)=>{
+    //console.log('GET ACCOUNT STATUS');
+    const user=await User.findById(req.user._id).exec();
+    const account=await stripe.account.retrieve(user.stripe_account_id);
+    console.log('USER ACCOUNT RETRIEVE',account);
+    const udpatedUser=await User.findByIdAndUpdate(
+        user._id,
+        {
+            stripe_seller:account
+        },
+        {new:true}
+    ).select('-password').exec();
+    console.log('udpated-user',udpatedUser);
+    res.json(udpatedUser);
+}
